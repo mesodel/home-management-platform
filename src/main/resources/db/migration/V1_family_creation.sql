@@ -16,14 +16,14 @@ CREATE TABLE user (
 );
 
 CREATE TABLE status (
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     value VARCHAR(30),
 
     PRIMARY KEY(id)
 );
 
 CREATE TABLE task (
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
     description VARCHAR(100),
     status_id BIGINT NOT NULL,

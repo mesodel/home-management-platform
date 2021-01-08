@@ -1,6 +1,7 @@
 package com.unibuc.homemanagementplatform.dto;
 
 import com.unibuc.homemanagementplatform.model.Task;
+import com.unibuc.homemanagementplatform.model.User_Task;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,7 +11,7 @@ public class UserRequestGetWithList {
     private String userEmail;
     private String name;
     private String familyName;
-    private List<Task> tasks;
+    private List<User_Task> tasks;
 
     public String getUserEmail() {
         return userEmail;
@@ -36,18 +37,18 @@ public class UserRequestGetWithList {
         this.familyName = familyName;
     }
 
-    public List<Task> getTasks() {
+    public List<User_Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<User_Task> tasks) {
         this.tasks = tasks;
     }
 
     public UserRequestGetWithList() {
     }
 
-    public UserRequestGetWithList(@NotNull String userEmail, String name, String familyName, List<Task> tasks) {
+    public UserRequestGetWithList(@NotNull String userEmail, String name, String familyName, List<User_Task> tasks) {
         this.userEmail = userEmail;
         this.name = name;
         this.familyName = familyName;
