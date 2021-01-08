@@ -45,4 +45,18 @@ public class UserRepository {
 
         return user;
     }
+
+    public User getOne(String email) {
+        String getSql = "SELECT * from user where user.email= ?";
+
+        RowMapper<User> rowMapper = (resultSet, i) -> {
+            User user = new User();
+            user.setUserEmail(resultSet.getString("email"));
+            user.setName(resultSet.getString("name"));
+            return user;
+        };
+        List<User> users = jdbcTemplate.query(getSql,rowMapper,email);
+
+        return users.get(0);
+    }
 }

@@ -2,6 +2,7 @@ package com.unibuc.homemanagementplatform.service;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestGet;
+import com.unibuc.homemanagementplatform.dto.UserRequestGetWithList;
 import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
 import com.unibuc.homemanagementplatform.model.Family;
@@ -48,5 +49,12 @@ public class UserService {
         user.setFamily(family);
 
         return userMapperGet.mapToRequest(user);
+    }
+
+    public UserRequestGetWithList getUser(String email) {
+        User user = repository.getOne(email);
+
+
+
     }
 }

@@ -2,14 +2,12 @@ package com.unibuc.homemanagementplatform.controller;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestGet;
+import com.unibuc.homemanagementplatform.dto.UserRequestGetWithList;
 import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -26,6 +24,12 @@ public class UserController {
         long familyId = userRequestCreate.getFamilyId();
 
         return ResponseEntity.ok().body(userService.createUser(userRequestCreate));
+    }
+
+    @GetMapping(path = "/{email}")
+    public ResponseEntity<UserRequestGetWithList> getUser(@PathVariable("email") String email) {
+        UserRequestGetWithList userRequestGetWithList = userService.getUser(email);
+        return ResponseEntity.ok().body(userRequestGetWithList);
     }
 
 
