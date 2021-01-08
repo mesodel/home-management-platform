@@ -12,23 +12,23 @@ public class UserRequestGet {
     private String userEmail;
     private String name;
     private String familyName;
-    private List<Task> tasks;
+    private List<TaskRequestGet> tasks;
 
     public UserRequestGet() {
     }
 
-    public UserRequestGet(@NotNull String userEmail, String name, String familyName, List<Task> tasks) {
+    public UserRequestGet(@NotNull String userEmail, String name, String familyName, List<TaskRequestGet> tasks) {
         this.userEmail = userEmail;
         this.name = name;
         this.familyName = familyName;
         this.tasks = tasks;
     }
 
-    public List<Task> getTasks() {
+    public List<TaskRequestGet> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskRequestGet> tasks) {
         this.tasks = tasks;
     }
 

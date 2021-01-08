@@ -57,7 +57,6 @@ public class UserRepository {
             User user = new User();
             user.setUserEmail(resultSet.getString("email"));
             user.setName(resultSet.getString("name"));
-            user.setTasks(taskRepository.getTasksOfUser(resultSet.getString("email")));
 
             Family family = new Family();
             family.setFamilyId(resultSet.getLong("family_id"));

@@ -7,6 +7,7 @@ import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
 import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.model.User;
 import com.unibuc.homemanagementplatform.repository.FamilyRepository;
+import com.unibuc.homemanagementplatform.repository.TaskRepository;
 import com.unibuc.homemanagementplatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private TaskService taskService;
 
     public List<UserRequestGet> getUsersFromFamily(Long familyId) {
         List<User> users = repository.getUsers(familyId);
@@ -53,6 +57,8 @@ public class UserService {
         User user = repository.getOne(email);
         user.setFamily(familyRepository.getOne(user.getFamily().getFamilyId()));
 
-        return userMapperGet.mapToRequest(user);
+        UserRequestGet userRequestGet = userMapperGet.mapToRequest(user);
+        userRequestGet.setTasks(taskService.getTasksOfUser(email));
+        return userRequestGet;
     }
 }
