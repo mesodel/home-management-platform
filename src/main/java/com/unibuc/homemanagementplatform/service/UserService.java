@@ -1,32 +1,52 @@
 package com.unibuc.homemanagementplatform.service;
 
-import com.unibuc.homemanagementplatform.data.entity.Family;
-import com.unibuc.homemanagementplatform.data.entity.User;
-import com.unibuc.homemanagementplatform.data.repository.FamilyRepository;
-import com.unibuc.homemanagementplatform.data.repository.UserRepository;
+import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
+import com.unibuc.homemanagementplatform.dto.UserRequestGet;
+import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
+import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
+import com.unibuc.homemanagementplatform.model.Family;
+import com.unibuc.homemanagementplatform.model.User;
+import com.unibuc.homemanagementplatform.repository.FamilyRepository;
+import com.unibuc.homemanagementplatform.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
+    @Autowired
+    private FamilyRepository familyRepository;
 
-    private final UserRepository userRepository;
-    private final FamilyRepository familyRepository;
 
-    public UserService(UserRepository userRepository, FamilyRepository familyRepository) {
-        this.userRepository = userRepository;
-        this.familyRepository = familyRepository;
+    @Autowired
+    private UserMapperGet userMapperGet;
+
+    @Autowired
+    private UserMapperCreate userMapperCreate;
+
+    @Autowired
+    private UserRepository repository;
+
+    public List<UserRequestGet> getUsersFromFamily(Long familyId) {
+        List<User> users = repository.getUsers(familyId);
+
+        List<UserRequestGet> usersDTO = new ArrayList<>();
+
+        for(User u : users) {
+            usersDTO.add(userMapperGet.mapToRequest(u));
+        }
+
+        return usersDTO;
     }
 
-    public void createUser(User user) {
-        Family family = familyRepository.findById(user.getFamily().getFamilyId()).orElse(null);
-        familyRepository.save(familyRepository.findById(user.getFamily().getFamilyId()).orElse(null));
+    public UserRequestGet createUser(UserRequestCreate userRequestCreate) {
+        User user = userMapperCreate.mapToEntity(userRequestCreate);
+        repository.save(user);
+        Family family = familyRepository.getOne(userRequestCreate.getFamilyId());
         user.setFamily(family);
-        userRepository.save(user);
-    }
 
-    public Optional<User> authUser(String email) {
-        return userRepository.findById(email);
+        return userMapperGet.mapToRequest(user);
     }
 }
