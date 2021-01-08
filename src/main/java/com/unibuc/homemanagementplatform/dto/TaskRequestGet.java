@@ -1,30 +1,20 @@
-package com.unibuc.homemanagementplatform.model;
+package com.unibuc.homemanagementplatform.dto;
 
-import java.util.ArrayList;
+import com.unibuc.homemanagementplatform.model.Status;
+import com.unibuc.homemanagementplatform.model.User;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-public class Task {
+public class TaskRequestGet {
 
+    @NotNull
     private Long taskId;
     private String name;
     private String description;
     private Status status;
     private Date dueBy;
-    private List<User> users;
-
-    public Task() {
-        users = new ArrayList<>();
-    }
-
-    public Task(Long taskId, String name, String description, Status status, Date dueBy, List<User> users) {
-        this.taskId = taskId;
-        this.name = name;
-        this.description = description;
-        this.status = status;
-        this.dueBy = dueBy;
-        this.users = users;
-    }
 
     public Long getTaskId() {
         return taskId;
@@ -66,11 +56,14 @@ public class Task {
         this.dueBy = dueBy;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public TaskRequestGet() {
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public TaskRequestGet(@NotNull Long taskId, String name, String description, Status status, Date dueBy) {
+        this.taskId = taskId;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.dueBy = dueBy;
     }
 }

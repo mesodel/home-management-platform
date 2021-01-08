@@ -2,10 +2,8 @@ package com.unibuc.homemanagementplatform.service;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestGet;
-import com.unibuc.homemanagementplatform.dto.UserRequestGetWithList;
 import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
-import com.unibuc.homemanagementplatform.mapper.UserMapperGetWithList;
 import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.model.User;
 import com.unibuc.homemanagementplatform.repository.FamilyRepository;
@@ -20,9 +18,6 @@ import java.util.List;
 public class UserService {
     @Autowired
     private FamilyRepository familyRepository;
-
-    @Autowired
-    private UserMapperGetWithList userMapperGetWithList;
 
     @Autowired
     private UserMapperGet userMapperGet;
@@ -54,11 +49,10 @@ public class UserService {
         return userMapperGet.mapToRequest(user);
     }
 
-    public UserRequestGetWithList getUser(String email) {
+    public UserRequestGet getUser(String email) {
         User user = repository.getOne(email);
-        UserRequestGetWithList dto = userMapperGetWithList.mapToRequest(user);
+        user.setFamily(familyRepository.getOne(user.getFamily().getFamilyId()));
 
-
-
+        return userMapperGet.mapToRequest(user);
     }
 }

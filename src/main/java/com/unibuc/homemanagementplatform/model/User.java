@@ -1,4 +1,5 @@
 package com.unibuc.homemanagementplatform.model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +10,8 @@ public class User {
     private Family family;
     private String name;
     private String password;
-    private List<User_Task> tasks;
-
-    public User(String userEmail, Family family, String name, String password, List<User_Task> tasks) {
-        this.userEmail = userEmail;
-        this.family = family;
-        this.name = name;
-        this.password = password;
-        this.tasks = tasks;
-    }
-
+    private List<Task> tasks;
+    
     public User(String userEmail, String name, String password) {
         this.userEmail = userEmail;
         this.name = name;
@@ -61,11 +54,11 @@ public class User {
         this.password = password;
     }
 
-    public List<User_Task> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<User_Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 }
