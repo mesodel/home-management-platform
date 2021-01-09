@@ -15,9 +15,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserMapperGet userMapperGet;
-
     @PostMapping(path = "/create")
     public ResponseEntity<UserRequestGet> createUser(@RequestBody UserRequestCreate userRequestCreate) {
         return ResponseEntity.ok().body(userService.createUser(userRequestCreate));

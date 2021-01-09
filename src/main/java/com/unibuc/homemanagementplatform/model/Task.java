@@ -1,5 +1,7 @@
 package com.unibuc.homemanagementplatform.model;
 
+import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,13 +13,13 @@ public class Task {
     private String description;
     private Status status;
     private Date dueBy;
-    private List<User> users;
+    private List<UserRequestTaskCreate> users;
 
     public Task() {
         users = new ArrayList<>();
     }
 
-    public Task(Long taskId, String name, String description, Status status, Date dueBy, List<User> users) {
+    public Task(Long taskId, String name, String description, Status status, Date dueBy, List<UserRequestTaskCreate> users) {
         this.taskId = taskId;
         this.name = name;
         this.description = description;
@@ -66,11 +68,11 @@ public class Task {
         this.dueBy = dueBy;
     }
 
-    public List<User> getUsers() {
+    public List<UserRequestTaskCreate> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserRequestTaskCreate> users) {
         this.users = users;
     }
 }
