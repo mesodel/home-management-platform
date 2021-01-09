@@ -6,10 +6,7 @@ import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/task")
@@ -22,5 +19,11 @@ public class TaskController {
     public ResponseEntity<TaskRequestCreate> createTask(@RequestBody TaskRequestCreate t) {
         taskService.create(t);
         return ResponseEntity.ok().body(t);
+    }
+
+    @PostMapping("/updateDescription/{id}")
+    public ResponseEntity<TaskRequestCreate> updateTaskDescription(@PathVariable Long id, @RequestBody Task taskReq) {
+        TaskRequestCreate task = taskService.updateDescription(id,taskReq);
+        return ResponseEntity.ok().body(task);
     }
 }

@@ -1,10 +1,7 @@
 package com.unibuc.homemanagementplatform.repository;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
-import com.unibuc.homemanagementplatform.model.Status;
-import com.unibuc.homemanagementplatform.model.StatusValue;
 import com.unibuc.homemanagementplatform.model.Task;
-import com.unibuc.homemanagementplatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -61,6 +58,27 @@ public class TaskRepository {
         }
 
         return t;
+    }
 
+    public Task getTask(Long id) {
+        String selectSql = "SELECT * from task where id = ?";
+        RowMapper<Task> rowMapper = (resultSet, i) -> {
+          Task task = new Task();
+          task.setTaskId(resultSet.getLong("id"));
+          task.setName(resultSet.getString("name"));
+          task.setDescription(resultSet.getString("description"));
+          task.setDueBy(resultSet.getDate("due_by"));
+
+            return task;
+        };
+       List<Task> tasks = jdbcTemplate.query(selectSql,rowMapper,id);
+       return tasks.get(0);
+    }
+
+    public Task update(Long id, String description) {
+        String updateSql = "UPDATE task set description = ? where id = ?";
+        jdbcTemplate.update(updateSql,description,id);
+
+        return getTask(id);
     }
 }

@@ -2,6 +2,7 @@ package com.unibuc.homemanagementplatform.model;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
