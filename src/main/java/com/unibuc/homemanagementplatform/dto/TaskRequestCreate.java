@@ -1,9 +1,9 @@
 package com.unibuc.homemanagementplatform.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.unibuc.homemanagementplatform.model.User;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class TaskRequestCreate {
@@ -11,8 +11,8 @@ public class TaskRequestCreate {
     private String name;
     private String description;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime dueBy;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dueBy;
 
     private List<UserRequestTaskCreate> users;
 
@@ -35,11 +35,11 @@ public class TaskRequestCreate {
         this.description = description;
     }
 
-    public LocalDateTime getDueBy() {
+    public Date getDueBy() {
         return dueBy;
     }
 
-    public void setDueBy(LocalDateTime dueBy) {
+    public void setDueBy(Date dueBy) {
         this.dueBy = dueBy;
     }
 

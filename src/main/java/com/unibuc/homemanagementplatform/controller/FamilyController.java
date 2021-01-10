@@ -6,6 +6,7 @@ import com.unibuc.homemanagementplatform.mapper.FamilyCreateMapper;
 import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.service.FamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,4 +32,13 @@ public class FamilyController {
 
         return ResponseEntity.ok().body(family);
     }
+
+    /*@DeleteMapping("/delete/{id}")
+    public ResponseEntity<Long> deleteFamily(@PathVariable Long id) {
+        boolean result = familyService.delete(id);
+        if(!result) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(id,HttpStatus.OK);
+    }*/
 }

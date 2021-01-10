@@ -2,6 +2,7 @@ package com.unibuc.homemanagementplatform.repository;
 
 import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.model.Family;
+import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -68,5 +69,27 @@ public class UserRepository {
         };
 
         return jdbcTemplate.query(getSql, rowMapper, email).get(0);
+    }
+
+    public boolean delete(String email) {
+        String selectTaskSql = "SELECT * from user_task where user_task.user_email = ?";
+
+        RowMapper<Task> rowMapper = (resultSet, rowNo) -> {
+            Task task = new Task();
+            task.setTaskId(resultSet.getLong("task_id"));
+            return task;
+        };
+        List<Task> tasks = jdbcTemplate.query(selectTaskSql,rowMapper,email);
+
+        String deleteUserTaskSql = "DELETE from user_task where user_task.user_email = ?";
+        jdbcTemplate.update(deleteUserTaskSql,email);
+        String deleteUserSql = "DELETE from user where email = ?";
+        int noRowsAffected = jdbcTemplate.update(deleteUserSql,email);
+
+        for(Task t : tasks) {
+            String deleteTaskSql = "DELETE from task where id = ?";
+            jdbcTemplate.update(deleteTaskSql,t.getTaskId());
+        }
+        return noRowsAffected == 1;
     }
 }

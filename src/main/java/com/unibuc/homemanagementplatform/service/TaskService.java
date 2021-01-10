@@ -7,13 +7,16 @@ import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
 import com.unibuc.homemanagementplatform.mapper.TaskMapperCreate;
 import com.unibuc.homemanagementplatform.mapper.TaskMapperGet;
 import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
+import com.unibuc.homemanagementplatform.model.Status;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
+import com.unibuc.homemanagementplatform.repository.StatusRepository;
 import com.unibuc.homemanagementplatform.repository.TaskRepository;
 import com.unibuc.homemanagementplatform.repository.User_Task_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -34,8 +37,8 @@ public class TaskService {
     @Autowired
     private User_Task_Repository user_task_repository;
 
-
-
+    @Autowired
+    private StatusRepository statusRepository;
 
     public List<TaskRequestGet> getTasksOfUser(String email) {
        List<TaskRequestGet> tasksDto = new ArrayList<>();
@@ -56,11 +59,9 @@ public class TaskService {
 
     public TaskRequestCreate updateDescription(Long id, Task taskReq) {
         Task task = taskRepository.update(id,taskReq.getDescription());
-        Date date = task.getDueBy();
-        task.setDueBy(null);
+
         TaskRequestCreate taskRequestCreate = taskMapperCreate.mapToRequest(task);
-        date.toInstant();
-        taskRequestCreate.setDueBy(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+
         List<User> users = user_task_repository.getUsers(id);
         List<UserRequestTaskCreate> usersTask = new ArrayList<>();
         for(User u : users) {
@@ -70,5 +71,17 @@ public class TaskService {
         taskRequestCreate.setUsers(usersTask);
 
         return taskRequestCreate;
+    }
+
+    public boolean delete(Long id) {
+        return taskRepository.remove(id);
+    }
+
+    public TaskRequestGet updateStatus(Long id, Task taskReq) {
+        Task task = taskRepository.updateStatus(id,taskReq.getStatus());
+        TaskRequestGet taskRequestGet = taskMapperGet.mapToRequest(task);
+        taskRequestGet.setStatus(task.getStatus());
+
+        return taskRequestGet;
     }
 }

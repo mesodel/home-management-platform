@@ -1,6 +1,7 @@
 package com.unibuc.homemanagementplatform.repository;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
+import com.unibuc.homemanagementplatform.model.Status;
 import com.unibuc.homemanagementplatform.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -68,8 +69,10 @@ public class TaskRepository {
           task.setName(resultSet.getString("name"));
           task.setDescription(resultSet.getString("description"));
           task.setDueBy(resultSet.getDate("due_by"));
+          Status status = statusRepository.getById(resultSet.getLong("status_id"));
+          task.setStatus(status);
 
-            return task;
+          return task;
         };
        List<Task> tasks = jdbcTemplate.query(selectSql,rowMapper,id);
        return tasks.get(0);
@@ -78,6 +81,23 @@ public class TaskRepository {
     public Task update(Long id, String description) {
         String updateSql = "UPDATE task set description = ? where id = ?";
         jdbcTemplate.update(updateSql,description,id);
+
+        return getTask(id);
+    }
+
+    public boolean remove(Long id) {
+        String deleteUserTaskSql = "DELETE from user_task where user_task.task_id = ?";
+        jdbcTemplate.update(deleteUserTaskSql,id);
+        String deleteTaskSql = "DELETE from task where task.id = ?";
+        int noRowsAffected = jdbcTemplate.update(deleteTaskSql,id);
+        return noRowsAffected == 1;
+
+
+    }
+
+    public Task updateStatus(Long id, Status status) {
+        String updateSql = "UPDATE task set status_id = ? where id = ?";
+        jdbcTemplate.update(updateSql,statusRepository.getOrInsert(status.getStatusValue()).getStatusId(),id);
 
         return getTask(id);
     }

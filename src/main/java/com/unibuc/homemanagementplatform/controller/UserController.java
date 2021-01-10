@@ -5,6 +5,7 @@ import com.unibuc.homemanagementplatform.dto.UserRequestGet;
 import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,14 @@ public class UserController {
     @GetMapping(path = "/{email}")
     public ResponseEntity<UserRequestGet> getUser(@PathVariable("email") String email) {
         return ResponseEntity.ok().body(userService.getUser(email));
+    }
+
+    @DeleteMapping(path = "delete/{email}")
+    public ResponseEntity<String> deleteUser(@PathVariable String email) {
+        boolean result = userService.delete(email);
+        if(!result) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+            return new ResponseEntity<>(email, HttpStatus.OK);
     }
 }

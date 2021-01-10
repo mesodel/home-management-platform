@@ -31,4 +31,8 @@ public class FamilyService {
 
         return dto;
     }
+
+  /*  public boolean delete(Long id) {
+        return familyRepository.delete(id);
+    }*/
 }

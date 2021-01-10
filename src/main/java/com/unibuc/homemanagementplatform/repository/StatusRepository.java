@@ -2,7 +2,9 @@ package com.unibuc.homemanagementplatform.repository;
 
 import com.unibuc.homemanagementplatform.model.Status;
 import com.unibuc.homemanagementplatform.model.StatusValue;
+import com.unibuc.homemanagementplatform.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -30,5 +32,32 @@ public class StatusRepository {
         return statuses.get(0);
     }
 
-    ;
+    public Status getByValue(StatusValue value) {
+        String selectSql = "SELECT * from status where value = ?";
+        RowMapper<Status> rowMapper = (resultSet, i) -> {
+            Status status = new Status();
+            status.setStatusId(resultSet.getLong("id"));
+            status.setStatusValue(value);
+            return status;
+        };
+        try {
+            return jdbcTemplate.query(selectSql, rowMapper, value.toString()).get(0);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public Status getOrInsert(StatusValue statusValue) {
+        Status status = getByValue(statusValue);
+        if (status != null) {
+            return status;
+        } else {
+            String saveSql = "INSERT INTO status (value) VALUES (?)";
+            jdbcTemplate.update(saveSql,statusValue.toString());
+
+            return getByValue(statusValue);
+        }
+    }
+
+
 }

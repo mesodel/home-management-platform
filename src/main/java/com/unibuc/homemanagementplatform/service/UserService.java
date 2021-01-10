@@ -61,4 +61,8 @@ public class UserService {
         userRequestGet.setTasks(taskService.getTasksOfUser(email));
         return userRequestGet;
     }
+
+    public boolean delete(String email) {
+        return repository.delete(email);
+    }
 }
