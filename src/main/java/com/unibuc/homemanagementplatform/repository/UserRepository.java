@@ -5,6 +5,7 @@ import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,24 @@ public class UserRepository {
         return user;
     }
 
+    public User getOneWithPass(String email) {
+        String getSql = "SELECT * FROM user WHERE user.email=?";
+
+        RowMapper<User> rowMapper = (resultSet, i) -> {
+            User user = new User();
+            user.setUserEmail(resultSet.getString("email"));
+            user.setPassword(resultSet.getString("password"));
+
+            return user;
+        };
+        try {
+            return jdbcTemplate.query(getSql, rowMapper, email).get(0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
     public User getOne(String email) {
         // get the tasks of an user
         String getSql = "SELECT * FROM user, user_task WHERE user.email=user_task.user_email AND user_task.user_email=?";
@@ -67,8 +86,12 @@ public class UserRepository {
 
             return user;
         };
+        try {
+            return jdbcTemplate.query(getSql, rowMapper, email).get(0);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
 
-        return jdbcTemplate.query(getSql, rowMapper, email).get(0);
     }
 
     public boolean delete(String email) {

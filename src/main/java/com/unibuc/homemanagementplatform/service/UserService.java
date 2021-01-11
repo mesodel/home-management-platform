@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -64,5 +65,9 @@ public class UserService {
 
     public boolean delete(String email) {
         return repository.delete(email);
+    }
+
+    public User getUserWithPass(String email) {
+        return repository.getOneWithPass(email);
     }
 }
