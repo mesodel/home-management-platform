@@ -1,5 +1,6 @@
 package com.unibuc.homemanagementplatform.controller;
 
+import com.unibuc.homemanagementplatform.JavaMailSender;
 import com.unibuc.homemanagementplatform.dto.FamilyRequestCreate;
 import com.unibuc.homemanagementplatform.dto.FamilyRequestGet;
 import com.unibuc.homemanagementplatform.mapper.FamilyCreateMapper;
@@ -8,11 +9,15 @@ import com.unibuc.homemanagementplatform.service.FamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/family")
 public class FamilyController {
+
+
     @Autowired
     private FamilyCreateMapper familyCreateMapper;
 

@@ -11,7 +11,18 @@ public class User {
     private String name;
     private String password;
     private List<Task> tasks;
-    
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userEmail='" + userEmail + '\'' +
+                ", family=" + family +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", tasks=" + tasks +
+                '}';
+    }
+
     public User(String userEmail, String name, String password) {
         this.userEmail = userEmail;
         this.name = name;

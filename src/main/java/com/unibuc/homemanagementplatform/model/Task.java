@@ -16,6 +16,18 @@ public class Task {
     private Date dueBy;
     private List<UserRequestTaskCreate> users;
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", dueBy=" + dueBy +
+                ", users=" + users +
+                '}';
+    }
+
     public Task() {
         users = new ArrayList<>();
     }

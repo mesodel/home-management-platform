@@ -20,6 +20,9 @@ public class TaskRepository {
     @Autowired
     private StatusRepository statusRepository;
 
+    @Autowired
+    private LogRepository logRepository;
+
     public List<Task> getTasksOfUser(String email) {
         String getSql = "SELECT * FROM task, user_task WHERE task.id=user_task.task_id AND user_task.user_email=?";
 
@@ -52,10 +55,12 @@ public class TaskRepository {
         String saveSql = "INSERT INTO task (id, name, description, due_by, status_id) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(saveSql,t.getTaskId(), t.getName(),t.getDescription(),t.getDueBy(), 1);
 
+        logRepository.save(t + " has been inserted into the DB");
 
         for(UserRequestTaskCreate u : t.getUsers()) {
             String saveAssignedUsers = "INSERT INTO user_task (created_on, user_email, task_id) VALUES (?, ?, ?)";
-            jdbcTemplate.update(saveAssignedUsers, LocalDateTime.now(),u.getUserEmail(),getLastTaskCreated().getTaskId());
+            jdbcTemplate.update(saveAssignedUsers, LocalDateTime.now().plusSeconds((int)(Math.random() * 5)),
+                    u.getUserEmail(),getLastTaskCreated().getTaskId());
         }
 
         return t;

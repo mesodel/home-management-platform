@@ -42,4 +42,13 @@ public class Family {
     public void setFamilyMembers(List<User> familyMembers) {
         this.familyMembers = familyMembers;
     }
+
+    @Override
+    public String toString() {
+        return "Family{" +
+                "familyId=" + familyId +
+                ", familyName='" + familyName + '\'' +
+                ", familyMembers=" + familyMembers +
+                '}';
+    }
 }

@@ -24,6 +24,9 @@ public class UserRepository {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private LogRepository logRepository;
+
     public List<User> getUsers(Long familyId) {
         String getSql = "SELECT * from user, family WHERE family.id = user.family_id and user.family_id = ?";
 
@@ -45,10 +48,11 @@ public class UserRepository {
     }
 
 
-
     public User save(User user) {
         String createSql = "INSERT INTO user (family_id,email, name, password) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(createSql, user.getFamily().getFamilyId(), user.getUserEmail(), user.getName(), user.getPassword());
+
+        logRepository.save(user + " has been saved into the DB");
 
         return user;
     }
@@ -102,16 +106,16 @@ public class UserRepository {
             task.setTaskId(resultSet.getLong("task_id"));
             return task;
         };
-        List<Task> tasks = jdbcTemplate.query(selectTaskSql,rowMapper,email);
+        List<Task> tasks = jdbcTemplate.query(selectTaskSql, rowMapper, email);
 
         String deleteUserTaskSql = "DELETE from user_task where user_task.user_email = ?";
-        jdbcTemplate.update(deleteUserTaskSql,email);
+        jdbcTemplate.update(deleteUserTaskSql, email);
         String deleteUserSql = "DELETE from user where email = ?";
-        int noRowsAffected = jdbcTemplate.update(deleteUserSql,email);
+        int noRowsAffected = jdbcTemplate.update(deleteUserSql, email);
 
-        for(Task t : tasks) {
+        for (Task t : tasks) {
             String deleteTaskSql = "DELETE from task where id = ?";
-            jdbcTemplate.update(deleteTaskSql,t.getTaskId());
+            jdbcTemplate.update(deleteTaskSql, t.getTaskId());
         }
         return noRowsAffected == 1;
     }

@@ -14,9 +14,14 @@ public class FamilyRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private LogRepository logRepository;
+
     public Family save(Family family) {
         String saveSql = "INSERT INTO family (name) VALUES (?)";
         jdbcTemplate.update(saveSql, family.getFamilyName());
+        
+        logRepository.save(family + " has been inserted in the DB");
 
         return family;
     }

@@ -17,6 +17,9 @@ public class StatusRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private LogRepository logRepository;
+
     public Status getById(long id) {
         String selectSql = "SELECT * FROM status where id = ?";
 
@@ -55,7 +58,11 @@ public class StatusRepository {
             String saveSql = "INSERT INTO status (value) VALUES (?)";
             jdbcTemplate.update(saveSql,statusValue.toString());
 
-            return getByValue(statusValue);
+            Status insertedStatus = getByValue(statusValue);
+
+            logRepository.save(insertedStatus.toString() + " has been inserted into DB");
+
+            return insertedStatus;
         }
     }
 

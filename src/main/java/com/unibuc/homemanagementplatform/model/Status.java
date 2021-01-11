@@ -5,10 +5,19 @@ public class Status {
     private long statusId;
     private StatusValue statusValue;
 
-    public Status(long statusId,  StatusValue statusValue) {
+    @Override
+    public String toString() {
+        return "Status{" +
+                "statusId=" + statusId +
+                ", statusValue=" + statusValue +
+                '}';
+    }
+
+    public Status(long statusId, StatusValue statusValue) {
         this.statusId = statusId;
         this.statusValue = statusValue;
     }
+
 
     public Status() {
     }

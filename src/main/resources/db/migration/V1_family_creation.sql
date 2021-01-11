@@ -44,7 +44,7 @@ CREATE TABLE user_task (
 );
 
 CREATE TABLE log_message (
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     timestamp datetime,
     message VARCHAR(30)
 );
