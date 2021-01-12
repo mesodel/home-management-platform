@@ -7,7 +7,6 @@ import com.unibuc.homemanagementplatform.mapper.TaskMapperCreate;
 import com.unibuc.homemanagementplatform.mapper.TaskMapperGet;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
-import com.unibuc.homemanagementplatform.repository.StatusRepository;
 import com.unibuc.homemanagementplatform.repository.TaskRepository;
 import com.unibuc.homemanagementplatform.repository.User_Task_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,6 @@ public class TaskService {
     @Autowired
     private User_Task_Repository user_task_repository;
 
-    @Autowired
-    private StatusRepository statusRepository;
 
     public List<TaskRequestGet> getTasksOfUser(String email) {
        List<TaskRequestGet> tasksDto = new ArrayList<>();

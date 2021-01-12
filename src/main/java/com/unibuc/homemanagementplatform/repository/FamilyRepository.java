@@ -42,9 +42,4 @@ public class FamilyRepository {
 
         return familyList.get(0);
     }
-
-    /*public boolean delete(Long id) {
-        String deleteSql = "DELETE from family where family.id = ?";
-        jdbcTemplate.update(deleteSql,id);
-    }*/
 }

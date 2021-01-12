@@ -34,12 +34,4 @@ public class FamilyController {
         return ResponseEntity.ok().body(family);
     }
 
-    /*@DeleteMapping("/delete/{id}")
-    public ResponseEntity<Long> deleteFamily(@PathVariable Long id) {
-        boolean result = familyService.delete(id);
-        if(!result) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(id,HttpStatus.OK);
-    }*/
 }
