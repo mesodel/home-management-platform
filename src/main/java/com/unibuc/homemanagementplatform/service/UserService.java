@@ -2,19 +2,17 @@ package com.unibuc.homemanagementplatform.service;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestGet;
-import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
+import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.model.User;
 import com.unibuc.homemanagementplatform.repository.FamilyRepository;
-import com.unibuc.homemanagementplatform.repository.TaskRepository;
 import com.unibuc.homemanagementplatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {

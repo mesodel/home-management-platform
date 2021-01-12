@@ -3,7 +3,6 @@ package com.unibuc.homemanagementplatform.controller;
 import com.unibuc.homemanagementplatform.JavaMailSender;
 import com.unibuc.homemanagementplatform.dto.TaskRequestCreate;
 import com.unibuc.homemanagementplatform.dto.TaskRequestGet;
-import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.service.TaskService;
@@ -14,7 +13,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController

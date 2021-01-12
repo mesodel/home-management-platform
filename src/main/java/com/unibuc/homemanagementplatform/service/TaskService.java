@@ -2,12 +2,9 @@ package com.unibuc.homemanagementplatform.service;
 
 import com.unibuc.homemanagementplatform.dto.TaskRequestCreate;
 import com.unibuc.homemanagementplatform.dto.TaskRequestGet;
-import com.unibuc.homemanagementplatform.dto.UserRequestCreate;
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
 import com.unibuc.homemanagementplatform.mapper.TaskMapperCreate;
 import com.unibuc.homemanagementplatform.mapper.TaskMapperGet;
-import com.unibuc.homemanagementplatform.mapper.UserMapperCreate;
-import com.unibuc.homemanagementplatform.model.Status;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
 import com.unibuc.homemanagementplatform.repository.StatusRepository;
@@ -16,11 +13,7 @@ import com.unibuc.homemanagementplatform.repository.User_Task_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service

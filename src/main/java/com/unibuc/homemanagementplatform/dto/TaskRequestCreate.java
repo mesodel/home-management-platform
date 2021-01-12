@@ -47,6 +47,10 @@ public class TaskRequestCreate {
         return users;
     }
 
+    public void setAssignedTo(List<UserRequestTaskCreate> users) {
+        this.users = users;
+    }
+
     public void setUsers(List<UserRequestTaskCreate> users) {
         this.users = users;
     }
