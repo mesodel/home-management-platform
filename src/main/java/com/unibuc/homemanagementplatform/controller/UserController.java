@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -17,7 +19,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path = "/create")
-    public ResponseEntity<UserRequestGet> createUser(@RequestBody UserRequestCreate userRequestCreate) {
+    public ResponseEntity<UserRequestGet> createUser(@Valid @RequestBody UserRequestCreate userRequestCreate) {
         return ResponseEntity.ok().body(userService.createUser(userRequestCreate));
     }
 

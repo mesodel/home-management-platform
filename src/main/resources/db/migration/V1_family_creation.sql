@@ -46,5 +46,7 @@ CREATE TABLE user_task (
 CREATE TABLE log_message (
     id BIGINT NOT NULL AUTO_INCREMENT,
     timestamp datetime,
-    message VARCHAR(30)
+    message VARCHAR(512),
+
+    PRIMARY KEY(id)
 );

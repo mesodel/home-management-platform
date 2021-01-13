@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/family")
 public class FamilyController {
@@ -21,7 +23,7 @@ public class FamilyController {
     private FamilyService familyService;
 
     @PostMapping(path = "/create")
-    public ResponseEntity<Family> createFamily(@RequestBody FamilyRequestCreate familyRequest) {
+    public ResponseEntity<Family> createFamily(@Valid @RequestBody FamilyRequestCreate familyRequest) {
         Family family = familyCreateMapper.mapToEntity(familyRequest);
         Family createdFamily = familyService.createFamily(family);
         return ResponseEntity.ok().body(createdFamily);

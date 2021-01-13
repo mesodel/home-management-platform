@@ -32,7 +32,7 @@ public class StatusRepository {
 
         List<Status> statuses = jdbcTemplate.query(selectSql, rowMapper, id);
 
-        return statuses.get(0);
+        return statuses.isEmpty() ? new Status() : statuses.get(0);
     }
 
     public Status getByValue(StatusValue value) {
@@ -43,11 +43,8 @@ public class StatusRepository {
             status.setStatusValue(value);
             return status;
         };
-        try {
-            return jdbcTemplate.query(selectSql, rowMapper, value.toString()).get(0);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+        List<Status> statuses = jdbcTemplate.query(selectSql, rowMapper, value.toString());
+        return statuses.isEmpty() ? null : statuses.get(0);
     }
 
     public Status getOrInsert(StatusValue statusValue) {
@@ -56,7 +53,7 @@ public class StatusRepository {
             return status;
         } else {
             String saveSql = "INSERT INTO status (value) VALUES (?)";
-            jdbcTemplate.update(saveSql,statusValue.toString());
+            jdbcTemplate.update(saveSql, statusValue.toString());
 
             Status insertedStatus = getByValue(statusValue);
 

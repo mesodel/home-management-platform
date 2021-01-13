@@ -2,6 +2,7 @@ package com.unibuc.homemanagementplatform.repository;
 
 import com.unibuc.homemanagementplatform.dto.UserRequestTaskCreate;
 import com.unibuc.homemanagementplatform.model.Status;
+import com.unibuc.homemanagementplatform.model.StatusValue;
 import com.unibuc.homemanagementplatform.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,8 +53,11 @@ public class TaskRepository {
     }
 
     public Task save(Task t) {
+        Status status = statusRepository.getOrInsert(StatusValue.ASSIGNED);
+
         String saveSql = "INSERT INTO task (id, name, description, due_by, status_id) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(saveSql,t.getTaskId(), t.getName(),t.getDescription(),t.getDueBy(), 1);
+
+        jdbcTemplate.update(saveSql,t.getTaskId(), t.getName(),t.getDescription(),t.getDueBy(), status.getStatusId());
 
         logRepository.save(t + " has been inserted into the DB");
 

@@ -1,6 +1,5 @@
 package com.unibuc.homemanagementplatform.repository;
 
-import com.unibuc.homemanagementplatform.mapper.UserMapperGet;
 import com.unibuc.homemanagementplatform.model.Family;
 import com.unibuc.homemanagementplatform.model.Task;
 import com.unibuc.homemanagementplatform.model.User;
@@ -19,13 +18,10 @@ public class UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private UserMapperGet userMapperGet;
+    private LogRepository logRepository;
 
     @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
-    private LogRepository logRepository;
 
     public List<User> getUsers(Long familyId) {
         String getSql = "SELECT * from user, family WHERE family.id = user.family_id and user.family_id = ?";
@@ -34,6 +30,8 @@ public class UserRepository {
             User user = new User();
             user.setName(resultSet.getString("user.name"));
             user.setUserEmail(resultSet.getString("user.email"));
+
+            user.setTasks(taskRepository.getTasksOfUser(user.getUserEmail()));
 
             Family family = new Family();
             family.setFamilyName(resultSet.getString("family.name"));
@@ -76,8 +74,7 @@ public class UserRepository {
 
 
     public User getOne(String email) {
-        // get the tasks of an user
-        String getSql = "SELECT * FROM user, user_task WHERE user.email=user_task.user_email AND user_task.user_email=?";
+        String getSql = "SELECT * FROM user where user.email = ?";
 
         RowMapper<User> rowMapper = (resultSet, i) -> {
             User user = new User();

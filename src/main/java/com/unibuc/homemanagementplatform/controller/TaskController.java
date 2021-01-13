@@ -13,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskRequestCreate> createTask(@RequestBody TaskRequestCreate t) {
+    public ResponseEntity<TaskRequestCreate> createTask(@Valid @RequestBody TaskRequestCreate t) {
         taskService.create(t);
 
         List<UserRequestTaskCreate> users = t.getAssignedTo();
